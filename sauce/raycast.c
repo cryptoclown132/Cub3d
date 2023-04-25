@@ -2,44 +2,11 @@
 
 void raycast(t_hold *hold, int x)
 {
-	int dirx = 0;
-	int diry = 0;
-	double plane[2];
 
-	if (hold->cub->player_dir == 'S')
-	{
-		dirx = 0;
-		diry = 1;
-		plane[0] = -0.9;
-		plane[1] = 0;
-	}
-	else if (hold->cub->player_dir == 'N')
-	{
-		dirx = 0;
-		diry = -1;
-		plane[0] = 0.9;
-		plane[1] = 0;
-	}
-	else if (hold->cub->player_dir == 'E')
-	{
-		dirx = 1;
-		diry = 0;
-		plane[0] = 0;
-		plane[1] = -0.9;
-	}
-	else if (hold->cub->player_dir == 'W')
-	{
-		dirx = -1;
-		diry = 0;
-		plane[0] = 0;
-		plane[1] = 0.9;
-	}
-	
 	//has to be implemented
 	double cameraX = 2 * x / (double)WIDHT - 1; //x-coordinate in camera space
-	hold->look[0] = dirx + plane[0] * cameraX;
-	hold->look[1] = diry + plane[1] * cameraX;
-
+	hold->look[0] = hold->dirx + hold->plane[0] * cameraX;
+	hold->look[1] = hold->diry + hold->plane[1] * cameraX;
 
 
 	if(hold->look[0] == 0)
@@ -91,8 +58,6 @@ void dda(t_hold *hold)
 	// printf("ok\n");
 	hold->map_pos[0] = (int)hold->pos[0];//change value 
 	hold->map_pos[1] = (int)hold->pos[1];
-		// printf("c: %c\n", hold->cub->map[hold->map_pos[1]][hold->map_pos[0]]);
-		// printf("side_dist_x: %f\nside_dist_x: %f\n", hold->side_dist[0], hold->side_dist[1]);
 	// 	exit(0);
 	int i = 0;
 	while (1)
@@ -110,7 +75,6 @@ void dda(t_hold *hold)
 			hold->map_pos[1] += hold->step[1];
 			hold->side = 1;
 		}
-		// printf("map_pos_y = %i\n", hold->map_pos[1]);
 		if (hold->cub->map[hold->map_pos[1]][hold->map_pos[0]] == '1')
 		{
 			// printf("hit wall\n");
@@ -125,6 +89,8 @@ void dda(t_hold *hold)
 	}
 	else
 		hold->wall_dist = hold->side_dist[1] - hold->delta_dist[1];
+
+	// printf("walldist = %f\n", hold->wall_dist);
 
 	hold->cub->line_height = (int)(HEIGHT / hold->wall_dist);
 	hold->cub->tex_start = -hold->cub->line_height / 2 + HEIGHT / 2;

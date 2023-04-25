@@ -51,42 +51,82 @@ float pi_val(int32_t keycode, char *sin_or_cos)
 /* function calculates based on the keyhook_events, new position of the player */
 void calc_new_coordinate(t_hold *hold, int32_t keycode)
 {
-    float store_x;
-    float tmp[2];
+    // float store_x;
+    // float tmp[2];
 
-    tmp[0] = hold->look[0] - hold->pos[0];
-    tmp[1] = hold->pos[1] - hold->look[1];
-    store_x = hold->pos[0];
-    hold->pos[0] = hold->pos[0] + (hold->look[0] - hold->pos[0]) * cos(pi_val(keycode, "cos")) \
-            + (hold->look[1] - hold->pos[1]) * sin(pi_val(keycode, "sin"));
-    hold->pos[1] = hold->pos[1] + (hold->look[1] - hold->pos[1]) * cos(pi_val(keycode, "cos")) \
-            - (hold->look[0] - store_x) * sin(pi_val(keycode, "sin"));
-    hold->look[0] = hold->pos[0] + tmp[0];
-    hold->look[1] = hold->pos[1] - tmp[1];
-    hold->go = true;
+    // tmp[0] = hold->look[0] - hold->pos[0];
+    // tmp[1] = hold->pos[1] - hold->look[1];
+    // store_x = hold->pos[0];
+    // hold->pos[0] = hold->pos[0] + (hold->look[0] - hold->pos[0]) * cos(pi_val(keycode, "cos")) \
+    //         + (hold->look[1] - hold->pos[1]) * sin(pi_val(keycode, "sin"));
+    // hold->pos[1] = hold->pos[1] + (hold->look[1] - hold->pos[1]) * cos(pi_val(keycode, "cos")) \
+    //         - (hold->look[0] - store_x) * sin(pi_val(keycode, "sin"));
+    // hold->look[0] = hold->pos[0] + tmp[0];
+    // hold->look[1] = hold->pos[1] - tmp[1];
+    // hold->go = true;
+
+    if (keycode == W)
+    {
+        if (hold->diry < 0)
+            hold->pos[1] = hold->pos[1] - 0.2;
+        else
+            hold->pos[1] = hold->pos[1] + 0.2;
+    }
+    else if (keycode == S)
+    {
+        if (hold->diry < 0)
+          hold->pos[1] = hold->pos[1] + 0.2;
+        else
+            hold->pos[1] = hold->pos[1] - 0.2;
+    }
+    else if ( keycode == A)
+        hold->pos[0] = hold->pos[0] - 0.2;
+    else if (keycode == D)
+        hold->pos[0] = hold->pos[0] + 0.2;
 }
 
 /* function calculates the new looking_direction based on the updated x and y values */
 void calc_new_look_dir(t_hold *hold, int32_t keycode)
 {
-    float store_x_look;
+    // float store_x_look;
 
-	store_x_look = hold->look[0];
+	// store_x_look = hold->look[0];
+    // if (keycode == LEFT)
+    // {
+    //     hold->look[0] = hold->pos[0] + (hold->look[0] - hold->pos[0]) * cos(hold->angle) \
+    //                 + (hold->look[1] - hold->pos[1]) * sin(hold->angle);
+    //     hold->look[1] =hold->pos[1] + (hold->look[1] - hold->pos[1]) * cos(hold->angle) \
+    //                 - (store_x_look - hold->pos[0]) * sin(hold->angle);
+    // }
+	// else
+	// {
+	// 	hold->look[0] = hold->pos[0] + (hold->look[0] - hold->pos[0]) * cos(2*M_PI+hold->angle) \
+    //                 + (hold->look[1] - hold->pos[1]) * sin(2*M_PI-hold->angle);
+    //     hold->look[1] =hold->pos[1] + (hold->look[1] - hold->pos[1]) * cos(2*M_PI+hold->angle) \
+    //                 - (store_x_look - hold->pos[0]) * sin(2*M_PI-hold->angle);
+	// }
+    // hold->go = false;
+    float prev_dirx = hold->dirx;
+    float prev_plane = hold->plane[0];
     if (keycode == LEFT)
     {
-        hold->look[0] = hold->pos[0] + (hold->look[0] - hold->pos[0]) * cos(hold->angle) \
-                    + (hold->look[1] - hold->pos[1]) * sin(hold->angle);
-        hold->look[1] =hold->pos[1] + (hold->look[1] - hold->pos[1]) * cos(hold->angle) \
-                    - (store_x_look - hold->pos[0]) * sin(hold->angle);
+        hold->dirx = hold->dirx * cos(-ROTATION_ANGLE) - hold->diry * sin(-ROTATION_ANGLE);
+        hold->diry = prev_dirx * sin(-ROTATION_ANGLE) + hold->diry * cos(-ROTATION_ANGLE);
+        hold->plane[0] = hold->plane[0] * cos(-ROTATION_ANGLE) - hold->plane[1] * sin(-ROTATION_ANGLE);
+        hold->plane[1] = prev_plane * sin(-ROTATION_ANGLE) + hold->plane[1] * cos(-ROTATION_ANGLE);
     }
-	else
-	{
-		hold->look[0] = hold->pos[0] + (hold->look[0] - hold->pos[0]) * cos(2*M_PI+hold->angle) \
-                    + (hold->look[1] - hold->pos[1]) * sin(2*M_PI-hold->angle);
-        hold->look[1] =hold->pos[1] + (hold->look[1] - hold->pos[1]) * cos(2*M_PI+hold->angle) \
-                    - (store_x_look - hold->pos[0]) * sin(2*M_PI-hold->angle);
-	}
-    hold->go = false;
+    else if (keycode == RIGHT)
+    {
+        hold->dirx = hold->dirx * cos(ROTATION_ANGLE) - hold->diry * sin(ROTATION_ANGLE);
+        hold->diry = prev_dirx * sin(ROTATION_ANGLE) + hold->diry * cos(ROTATION_ANGLE);
+        hold->plane[0] = hold->plane[0] * cos(ROTATION_ANGLE) - hold->plane[1] * sin(ROTATION_ANGLE);
+        hold->plane[1] = prev_plane * sin(ROTATION_ANGLE) + hold->plane[1] * cos(ROTATION_ANGLE);
+    }
+    // printf("dirx = %f\n", hold->dirx);
+    // printf("diry = %f\n", hold->diry);
+
+    // printf("posx = %f\n", hold->pos[0]);
+    // printf("posy = %f\n", hold->pos[1]);
 }
 
 // void    image_init(t_hold *hold)
@@ -109,7 +149,7 @@ int32_t key_hook(int keycode, t_hold *hold)
         calc_new_coordinate(hold, keycode);
     if (keycode == LEFT || keycode == RIGHT)
         calc_new_look_dir(hold, keycode);
-    
+    put_image(hold);
     // // mlx_destroy_image(hold->mlx, hold->cub->img->img);
     // mlx_clear_window(hold->mlx, hold->mlx_win);
 

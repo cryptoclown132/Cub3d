@@ -6,7 +6,7 @@
 /*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 11:49:39 by jkroger           #+#    #+#             */
-/*   Updated: 2023/04/25 13:51:30 by jkroger          ###   ########.fr       */
+/*   Updated: 2023/04/25 15:05:27 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,12 @@ t_img	*which_texture(t_hold *hold)
 void	put_image(t_hold *hold)
 {
 	int	x;
-
 	x = -1;
 	while (++x < WIDHT)
 	{
 		raycast(hold, x);
 		put_image_height(which_texture(hold), hold, x);
 	}
-	printf("ok\n");
 	mlx_put_image_to_window(hold->mlx, hold->mlx_win, hold->cub->img->img, 0, 0);
 }
 

@@ -8,8 +8,35 @@ void update_data(t_hold *hold, int j, int i, char player)
 	hold->look[0] = i +0.5;
 	hold->pos[1] = i +0.5;
 	hold->look[1] = j +0.5-LINE_LEN;
-	// hold->cub->player_dir = hold->cub->map[i][j];
 
+	if (player == 'S')
+	{
+		hold->dirx = 0;
+		hold->diry = 1;
+		hold->plane[0] = -0.9;
+		hold->plane[1] = 0;
+	}
+	else if (player == 'N')
+	{
+		hold->dirx = 0;
+		hold->diry = -1;
+		hold->plane[0] = 0.9;
+		hold->plane[1] = 0;
+	}
+	else if (player == 'E')
+	{
+		hold->dirx = 1;
+		hold->diry = 0;
+		hold->plane[0] = 0;
+		hold->plane[1] = -0.9;
+	}
+	else if (player == 'W')
+	{
+		hold->dirx = -1;
+		hold->diry = 0;
+		hold->plane[0] = 0;
+		hold->plane[1] = 0.9;
+	}
 }
 
 void	valid_elem(t_hold *hold, t_cub *cub)
@@ -30,7 +57,7 @@ void	valid_elem(t_hold *hold, t_cub *cub)
 			if (cub->map[i][j] == 'S' || cub->map[i][j] == 'N'
 				|| cub->map[i][j] == 'W' || cub->map[i][j] == 'E')
 			{//changed i and j here
-				update_data(hold, j, i);
+				update_data(hold, j, i, cub->map[i][j]);
 				// hold->map_pos[0] = j;
 				// hold->map_pos[1] = i;
 				// hold->pos[0] = j +0.5;

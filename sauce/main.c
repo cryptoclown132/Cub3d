@@ -211,7 +211,6 @@ int	exit_win(t_hold *hold)
 
 int32_t game_loop(t_hold *hold)
 {
-		
 	put_image(hold);
 	return(0);
 }
@@ -221,7 +220,7 @@ void loop(t_hold *hold)
 	mlx_hook(hold->mlx_win, 17, 0, exit_win, hold);
 
 	mlx_hook(hold->mlx_win, 2, 0, key_hook, hold);
-	mlx_loop_hook(hold->mlx, game_loop, hold);
+	// mlx_loop_hook(hold->mlx, game_loop, hold);
 	mlx_do_sync(hold->mlx);
 	mlx_loop(hold->mlx);
 }
@@ -236,7 +235,8 @@ int main(int argc, char **argv)
 	initialize_mlx(&hold);
 	parse(&hold, hold.cub);
 	colours_and_images(&hold);
-
+    
+    put_image(&hold);
 	// colours_and_images(&hold);
 	// put_image(&hold);
 	loop(&hold);

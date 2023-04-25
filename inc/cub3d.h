@@ -30,7 +30,7 @@
 # define WINDOW_NAME "u gay"
 # define WIDHT 1000
 # define HEIGHT 700
-# define ROTATION_ANGLE 0.06
+# define ROTATION_ANGLE 0.15
 
 // get_next_line
 # ifndef BUFFER_SIZE
@@ -139,6 +139,12 @@ typedef struct s_hold
 	float	wall_dist;
 	float	side_dist[2];
 	int32_t	side;
+
+
+	float	dirx;
+	float	diry;
+	double	plane[2];
+
 
 	float	wall[2];
 	float angle;
