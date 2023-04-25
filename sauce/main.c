@@ -96,9 +96,6 @@ void init_minimap(t_hold *hold)
 
 void init_structs(t_hold *hold, char **argv)
 {
-    hold->mlx = NULL;
-    hold->pos[0] = 100;
-    hold->pos[1] = 100;
     init_cub(hold, argv);
     init_minimap(hold);
 }
@@ -121,10 +118,6 @@ void initialize_mlx(t_hold *hold)
     hold->player_img_ptr = mlx_xpm_file_to_image(hold->mlx, "invader.xpm", (int*)&hold->pos[0], (int*)&hold->pos[1]);
     hold->img_ptr = mlx_new_image(hold->mlx, WIDHT, HEIGHT);
     hold->data_addr = mlx_get_data_addr(hold->img_ptr, &hold->bits_per_pixel, &hold->size_line, &hold->endian);
-    hold->pos[0] = PLAYER_POSITION_X;
-    hold->pos[1] = PLAYER_POSITION_Y;
-    hold->look[0] = hold->pos[0];
-    hold->look[1] = hold->pos[1] - LINE_LEN;
     hold->angle = ROTATION_ANGLE;
     hold->go = false;
 }
@@ -210,23 +203,45 @@ void initialize_mlx(t_hold *hold)
 //     }
 // }
 
+int	exit_win(t_hold *hold)
+{
+	(void)hold;
+	exit(0);
+}
+
+int32_t game_loop(t_hold *hold)
+{
+		
+	put_image(hold);
+	return(0);
+}
+
+void loop(t_hold *hold)
+{
+	mlx_hook(hold->mlx_win, 17, 0, exit_win, hold);
+
+	mlx_hook(hold->mlx_win, 2, 0, key_hook, hold);
+	mlx_loop_hook(hold->mlx, game_loop, hold);
+	mlx_do_sync(hold->mlx);
+	mlx_loop(hold->mlx);
+}
+
 int main(int argc, char **argv)
 {
-    t_hold hold;
-    (void)argc;
-    
-    check_4_general_errors(argv, argc);
-    init_structs(&hold, argv);
-    initialize_mlx(&hold);
-    parse(&hold, hold.cub);
+	t_hold hold;
+	(void)argc;
 
-    put_image(&hold);
+	check_4_general_errors(argv, argc);
+	init_structs(&hold, argv);
+	initialize_mlx(&hold);
+	parse(&hold, hold.cub);
+	colours_and_images(&hold);
+
+	// colours_and_images(&hold);
+	// put_image(&hold);
+	loop(&hold);
 
 
-    // mlx_hook(hold.mlx_win, 2, 0, key_hook, &hold);
-    // mlx_loop_hook(hold.mlx, update_dot_position, &hold);
-    mlx_do_sync(hold.mlx);
-    mlx_loop(hold.mlx);
 }
 
 

@@ -28,8 +28,8 @@
 # define RESET "\x1B[0m"
 
 # define WINDOW_NAME "u gay"
-# define WIDHT 1500
-# define HEIGHT 1000
+# define WIDHT 1000
+# define HEIGHT 700
 # define ROTATION_ANGLE 0.06
 
 // get_next_line
@@ -229,6 +229,7 @@ void	put_image(t_hold *hold);
 void	init_images(t_hold *hold);
 int		get_colour(t_cub *cub, char *rgb);
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
+void	colours_and_images(t_hold *hold);
 
 void raycast(t_hold *hold, int x);
 #endif

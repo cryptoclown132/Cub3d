@@ -6,7 +6,7 @@
 /*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 11:49:39 by jkroger           #+#    #+#             */
-/*   Updated: 2023/04/24 18:16:36 by jkroger          ###   ########.fr       */
+/*   Updated: 2023/04/25 13:51:30 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,17 +89,23 @@ t_img	*which_texture(t_hold *hold)
 void	put_image(t_hold *hold)
 {
 	int	x;
-	hold->cub->floor_colour = get_colour(hold->cub, hold->cub->floor);
-	hold->cub->ceiling_colour = get_colour(hold->cub, hold->cub->ceiling);
-	init_images(hold);
+
 	x = -1;
 	while (++x < WIDHT)
 	{
 		raycast(hold, x);
-		// printf("tex_start = %i\n", hold->cub->tex_start);
 		put_image_height(which_texture(hold), hold, x);
 	}
+	printf("ok\n");
 	mlx_put_image_to_window(hold->mlx, hold->mlx_win, hold->cub->img->img, 0, 0);
+}
+
+
+void	colours_and_images(t_hold *hold)
+{
+	hold->cub->floor_colour = get_colour(hold->cub, hold->cub->floor);
+	hold->cub->ceiling_colour = get_colour(hold->cub, hold->cub->ceiling);
+	init_images(hold);
 }
 
 //side if to know if x or y side was hit

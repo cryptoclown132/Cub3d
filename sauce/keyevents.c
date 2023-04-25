@@ -8,14 +8,14 @@ int32_t update_dot_position(t_hold *hold)
 // draw look
 // draw_line(hold, hold->pos[0], hold->pos[1], (hold->look[0])*5, (hold->look[1])*5, 0x778899);
 
-int32_t i = 0;
+// int32_t i = 0;
     // draw_my_map2(hold);
-    while(i<HEIGHT)
-    {
-        // raycast(hold);
-        draw_line(hold, hold->wall_dist+100, i, hold->wall_dist, i, 0xff00);
-        i++;
-    }
+    // while(i<HEIGHT)
+    // {
+    //     // raycast(hold);
+    //     draw_line(hold, hold->wall_dist+100, i, hold->wall_dist, i, 0xff00);
+    //     i++;
+    // }
 	// draw_looking_direction(hold);
 	// put_info_on_window(hold);
     // hold->map_pos[0] = 0;
@@ -89,6 +89,17 @@ void calc_new_look_dir(t_hold *hold, int32_t keycode)
     hold->go = false;
 }
 
+// void    image_init(t_hold *hold)
+// {
+//     // hold->cub->img = malloc(sizeof(t_img));
+// 	// if (!hold->cub->img)
+// 	// 	error_free("Failed to malloc!", hold->cub);
+// 	hold->cub->img->img = mlx_new_image(hold->mlx, WIDHT, HEIGHT);
+// 	hold->cub->img->addr = mlx_get_data_addr(hold->cub->img->img,
+// 			&hold->cub->img->bits_per_pixel,
+// 			&hold->cub->img->line_length, &hold->cub->img->endian);
+// }
+
 int32_t key_hook(int keycode, t_hold *hold)
 {
     hold->go = false;
@@ -98,5 +109,11 @@ int32_t key_hook(int keycode, t_hold *hold)
         calc_new_coordinate(hold, keycode);
     if (keycode == LEFT || keycode == RIGHT)
         calc_new_look_dir(hold, keycode);
+    
+    // // mlx_destroy_image(hold->mlx, hold->cub->img->img);
+    // mlx_clear_window(hold->mlx, hold->mlx_win);
+
+    // // image_init(hold);
+    // put_image(hold);
     return (0);
 }

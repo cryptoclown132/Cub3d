@@ -4,34 +4,41 @@ void raycast(t_hold *hold, int x)
 {
 	int dirx = 0;
 	int diry = 0;
+	double plane[2];
+
 	if (hold->cub->player_dir == 'S')
 	{
 		dirx = 0;
 		diry = 1;
+		plane[0] = -0.9;
+		plane[1] = 0;
 	}
 	else if (hold->cub->player_dir == 'N')
 	{
 		dirx = 0;
 		diry = -1;
+		plane[0] = 0.9;
+		plane[1] = 0;
 	}
 	else if (hold->cub->player_dir == 'E')
 	{
 		dirx = 1;
 		diry = 0;
+		plane[0] = 0;
+		plane[1] = -0.9;
 	}
 	else if (hold->cub->player_dir == 'W')
 	{
 		dirx = -1;
 		diry = 0;
+		plane[0] = 0;
+		plane[1] = 0.9;
 	}
 	
-	double plane[2];
-	plane[0] = 0;
-	plane[1] = 0.66;
 	//has to be implemented
-	  double cameraX = 2 * x / (double)WIDHT - 1; //x-coordinate in camera space
-      hold->look[0] = dirx + plane[0] * cameraX;
-      hold->look[1] = diry + plane[1] * cameraX;
+	double cameraX = 2 * x / (double)WIDHT - 1; //x-coordinate in camera space
+	hold->look[0] = dirx + plane[0] * cameraX;
+	hold->look[1] = diry + plane[1] * cameraX;
 
 
 

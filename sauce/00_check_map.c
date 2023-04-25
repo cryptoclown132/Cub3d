@@ -1,5 +1,17 @@
 #include "../inc/cub3d.h"
 
+void update_data(t_hold *hold, int j, int i, char player)
+{
+	hold->map_pos[0] = j;
+	hold->map_pos[1] = i;
+	hold->pos[0] = j +0.5;
+	hold->look[0] = i +0.5;
+	hold->pos[1] = i +0.5;
+	hold->look[1] = j +0.5-LINE_LEN;
+	// hold->cub->player_dir = hold->cub->map[i][j];
+
+}
+
 void	valid_elem(t_hold *hold, t_cub *cub)
 {
 	int	i;
@@ -18,13 +30,14 @@ void	valid_elem(t_hold *hold, t_cub *cub)
 			if (cub->map[i][j] == 'S' || cub->map[i][j] == 'N'
 				|| cub->map[i][j] == 'W' || cub->map[i][j] == 'E')
 			{//changed i and j here
-				hold->map_pos[0] = j;
-				hold->map_pos[1] = i;
-				hold->pos[0] = j +0.5;
-				hold->look[0] = i +0.5;
-				hold->pos[1] = i +0.5;
-				hold->look[1] = j +0.5-LINE_LEN;
-				cub->player_dir = cub->map[i][j];
+				update_data(hold, j, i);
+				// hold->map_pos[0] = j;
+				// hold->map_pos[1] = i;
+				// hold->pos[0] = j +0.5;
+				// hold->look[0] = i +0.5;
+				// hold->pos[1] = i +0.5;
+				// hold->look[1] = j +0.5-LINE_LEN;
+				// cub->player_dir = cub->map[i][j];
 				// printf("check playerL [%c] pos:[%d][%d]\n", cub->map[i][j], i, j);
 				player++;
 			}
