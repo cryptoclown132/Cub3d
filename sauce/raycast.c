@@ -90,8 +90,6 @@ void dda(t_hold *hold)
 	else
 		hold->wall_dist = hold->side_dist[1] - hold->delta_dist[1];
 
-	// printf("walldist = %f\n", hold->wall_dist);
-
 	hold->cub->line_height = (int)(HEIGHT / hold->wall_dist);
 	hold->cub->tex_start = -hold->cub->line_height / 2 + HEIGHT / 2;
 	// hold->cub->tex_start = hold->cub->line_height / 2 + HEIGHT / 2;

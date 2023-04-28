@@ -28,14 +28,14 @@ void update_data(t_hold *hold, int j, int i, char player)
 		hold->dirx = 1;
 		hold->diry = 0;
 		hold->plane[0] = 0;
-		hold->plane[1] = -0.9;
+		hold->plane[1] = 0.9;
 	}
 	else if (player == 'W')
 	{
 		hold->dirx = -1;
 		hold->diry = 0;
 		hold->plane[0] = 0;
-		hold->plane[1] = 0.9;
+		hold->plane[1] = -0.9;
 	}
 }
 

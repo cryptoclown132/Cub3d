@@ -6,7 +6,7 @@
 /*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 11:49:39 by jkroger           #+#    #+#             */
-/*   Updated: 2023/04/25 15:05:27 by jkroger          ###   ########.fr       */
+/*   Updated: 2023/04/28 18:25:43 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ void	put_texture(t_img *img, t_cub *cub, int x, int y)
 		img->height * img->line_length + cub->tex_x % img->width * \
 		(img->bits_per_pixel / 8)));
 	my_mlx_pixel_put(cub->img, x, y, color);
+	// t_img *t = img;
+	// my_mlx_pixel_put(cub->img, x, y, 0xFF000000);
+	// if (t)
+	// 	return ;
+	//0x00FF0000
 }
 
 void	texture_coordinates(t_img *img, t_hold *hold)
@@ -61,6 +66,7 @@ void	put_image_height(t_img *img, t_hold *hold, int x)
 		my_mlx_pixel_put(hold->cub->img, x, y, hold->cub->ceiling_colour);
 		y++;
 	}
+	//printf("end = %i\n", hold->cub->tex_end);
 }
 
 t_img	*which_texture(t_hold *hold)
