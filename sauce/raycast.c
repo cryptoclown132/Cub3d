@@ -11,21 +11,23 @@ void raycast(t_hold *hold, int x)
 
 	if(hold->look[0] == 0)
 	{
-		hold->delta_dist[0] = 999999999999999;
+		hold->delta_dist[0] = 1e30;
 	}
 	else
 	{
-		hold->delta_dist[0] = fabsf(1/ hold->look[0]);
+		hold->delta_dist[0] = fabs(1/ hold->look[0]);
 	}
 	if(hold->look[1] == 0)
 	{
-		hold->delta_dist[1] = 999999999999999;
+		hold->delta_dist[1] = 1e30;
 	}
 	else
 	{
-		hold->delta_dist[1] = fabsf(1/ hold->look[1]);
+		hold->delta_dist[1] = fabs(1/ hold->look[1]);
 	}
 
+	hold->map_pos[0] = (int)hold->pos[0]; 
+	hold->map_pos[1] = (int)hold->pos[1];
 	// side dist for x
 	if (hold->look[0] < 0)
 	{
@@ -55,14 +57,9 @@ void raycast(t_hold *hold, int x)
 
 void dda(t_hold *hold)
 {
-	// printf("ok\n");
-	hold->map_pos[0] = (int)hold->pos[0];//change value 
-	hold->map_pos[1] = (int)hold->pos[1];
-	// 	exit(0);
 	int i = 0;
 	while (1)
 	{
-		// printf("i = %i\n", i);
 		if (hold->side_dist[0] < hold->side_dist[1])
 		{
 			hold->side_dist[0] += hold->delta_dist[0];
@@ -77,8 +74,6 @@ void dda(t_hold *hold)
 		}
 		if (hold->cub->map[hold->map_pos[1]][hold->map_pos[0]] == '1')
 		{
-			// printf("hit wall\n");
-			// exit(0);
 			break;
 		}
 		i++;
@@ -89,10 +84,11 @@ void dda(t_hold *hold)
 	}
 	else
 		hold->wall_dist = hold->side_dist[1] - hold->delta_dist[1];
-
+	
 	hold->cub->line_height = (int)(HEIGHT / hold->wall_dist);
 	hold->cub->tex_start = -hold->cub->line_height / 2 + HEIGHT / 2;
-	// hold->cub->tex_start = hold->cub->line_height / 2 + HEIGHT / 2;
+	// printf("walldist = %f\n", hold->wall_dist);
+	// printf("side = %i\n", hold->side);
 	if (hold->cub->tex_start < 0)
 		hold->cub->tex_start = 0;
 	hold->cub->tex_end = hold->cub->line_height / 2 + HEIGHT / 2;

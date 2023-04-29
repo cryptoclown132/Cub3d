@@ -78,8 +78,8 @@ typedef struct	s_img
 
 typedef struct s_minimap
 {
-	float	pos[2];
-	float	look[2];
+	double	pos[2];
+	double	look[2];
 }				t_minimap;
 
 typedef struct s_cub
@@ -130,24 +130,24 @@ typedef struct s_hold
 	int32_t size_line;
 	int32_t endian;
 
-	float	pos[2];
-	float	look[2];
+	double	pos[2];
+	double	look[2];
 	int32_t	map_pos[2];
 	int32_t	step[2];
 
-	float	delta_dist[2];
-	float	wall_dist;
-	float	side_dist[2];
+	double	delta_dist[2];
+	double	wall_dist;
+	double	side_dist[2];
 	int32_t	side;
 
 
-	float	dirx;
-	float	diry;
+	double	dirx;
+	double	diry;
 	double	plane[2];
 
 
-	float	wall[2];
-	float angle;
+	double	wall[2];
+	double angle;
 	bool go;
 	struct s_cub	*cub;
 	struct s_minimap	*minimap;

@@ -6,7 +6,7 @@
 /*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 11:49:39 by jkroger           #+#    #+#             */
-/*   Updated: 2023/04/28 18:25:43 by jkroger          ###   ########.fr       */
+/*   Updated: 2023/04/29 17:45:45 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,11 @@ t_img	*which_texture(t_hold *hold)
 	if (((hold->look[0] <= 0 && hold->look[1] <= 0)
 			|| (hold->look[0] >= 0 && hold->look[1] <= 0))
 		&& hold->side == 1)
-		return (hold->cub->img_south);
+		return (hold->cub->img_north);
 	else if (((hold->look[0] >= 0 && hold->look[1] >= 0)
 			|| (hold->look[0] <= 0 && hold->look[1] >= 0))
 		&& hold->side == 1)
-		return (hold->cub->img_north);
+		return (hold->cub->img_south);
 	else if (((hold->look[0] <= 0 && hold->look[1] <= 0)
 			|| (hold->look[0] <= 0 && hold->look[1] >= 0))
 		&& hold->side == 0)
