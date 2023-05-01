@@ -3,56 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmensing <mmensing@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/10 19:04:22 by mmensing          #+#    #+#             */
-/*   Updated: 2022/05/31 22:36:50 by mmensing         ###   ########.fr       */
+/*   Created: 2022/04/28 19:09:55 by jkroger           #+#    #+#             */
+/*   Updated: 2022/06/06 18:09:26 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/**
- * @brief	funtion searches for first occurrence of smaller string (str2)
- *			in bigger string (str1) up to the amount of len
- * 
- * @param str1 bigger string where str2 gets searched for
- * @param str2 smaller string that is getting searched in str1
- * @param len up to how many characters we are searching in str1
- * @return char* 	returns pointer to position in str if found
- * 					returns pointer to first string if second string is empty
- *					returns NULL if not found
- */
-char	*ft_strnstr(const char *str1, const char *str2, size_t len)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	size_t	i;
-	int		k;
+	size_t		i;
 
 	i = 0;
-	k = 0;
-	if (str2[i] == '\0')
-		return ((char *)str1);
-	while ((i < len) && (str1[i] != '\0'))
+	if (ft_strlen(needle) == ft_strlen(""))
+		return ((char *)haystack);
+	while (i < ft_strlen(haystack))
 	{
-		while (((i + k) < len) && (str2[k] == str1[k + i]))
+		if (i == len)
+			return (NULL);
+		if (ft_strncmp(&haystack[i], needle, ft_strlen(needle)) == 0)
 		{
-			if (str2[k + 1] == '\0')
-				return ((char *) str1 + i);
-			k++;
+			if (i + ft_strlen(needle) - 1 >= len)
+				return (NULL);
+			else
+				return ((char *)(&haystack[i]));
 		}
-		k = 0;
 		i++;
 	}
-	return ((char *) 0);
+	return (NULL);
 }
-
-// int main()
-// {
-//     char array1[20] = "fuck u bitch :)";
-//     char array2[10] = "fuck";
-//     char *ptr;
-//     int size = 9;
-//     ptr = ft_strnstr(array1, array2, size);
-//     //ptr = strnstr(array1, array2, size);
-//     printf("ptr: %s", ptr);
-// } 

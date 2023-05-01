@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmensing <mmensing@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/28 00:56:17 by mmensing          #+#    #+#             */
-/*   Updated: 2022/05/31 22:46:01 by mmensing         ###   ########.fr       */
+/*   Created: 2022/04/28 19:10:25 by jkroger           #+#    #+#             */
+/*   Updated: 2022/04/28 19:10:25 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,11 @@
 
 int	ft_tolower(int c)
 {
-	if ((c >= 65) && (c <= 90))
-		return (c + 32);
-	return (c);
+	if (c >= 'A' && c <= 'Z')
+	{
+		c = c + 32;
+		return (c);
+	}
+	else
+		return (c);
 }
-
-// int main()
-// {
-//     int c = 100;
-//     int val;
-//     val = ft_tolower(c);
-//     printf("val: %c\n", val);
-// } 

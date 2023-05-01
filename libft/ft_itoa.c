@@ -3,76 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmensing <mmensing@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/16 17:31:07 by mmensing          #+#    #+#             */
-/*   Updated: 2022/05/30 21:32:23 by mmensing         ###   ########.fr       */
+/*   Created: 2022/05/10 16:10:51 by jkroger           #+#    #+#             */
+/*   Updated: 2022/06/06 15:57:53 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/**
- * @brief converting integer into string
- * 
- * @param n integer that gets convertet
- * @return char pointer to string
- */
-static int	len_func(int n)
+static int	ft_count(long n)
 {
-	int		i;
+	int	i;
 
 	i = 0;
-	if (n <= 0)
-		i++;
-	while (n != 0)
+	if (n == 0)
 	{
-		n /= 10;
 		i++;
+		return (i);
 	}
-	return (i);
-}
-
-char	*converting(int len, int p, char *ptr, int n)
-{
-	while (len + 1 > p)
+	else
 	{
 		if (n < 0)
-			ptr[len] = n % 10 * (-1) + '0';
-		else
-			ptr[len] = n % 10 + '0';
-		n /= 10;
-		len--;
+		{
+			i++;
+			n = -n;
+		}
+		while (n > 0)
+		{
+			n = n / 10;
+			i++;
+		}
+		return (i);
 	}
-	return (ptr);
 }
 
 char	*ft_itoa(int n)
 {
-	char	*ptr;
-	int		len;
-	int		p;
+	int		i;
+	char	*c;
+	long	nbr;
 
-	len = 0;
-	len = len_func(n);
-	ptr = (char *) malloc (len + 1);
-	if (!ptr)
+	nbr = n;
+	i = ft_count(nbr);
+	c = malloc((i + 1) * sizeof(char));
+	if (!c)
 		return (NULL);
-	p = 0;
-	if (n < 0)
+	if (nbr < 0)
 	{
-		ptr[0] = '-';
-		p = 1;
+		c[0] = '-';
+		nbr = -nbr;
 	}
-	ptr[len] = '\0';
-	len--;
-	return (converting(len, p, ptr, n));
+	c[i--] = '\0';
+	if (nbr == 0)
+		c[i++] = nbr + '0';
+	while (nbr > 0)
+	{
+		c[i--] = nbr % 10 + '0';
+		nbr = nbr / 10;
+	}
+	return (c);
 }
-
-// int main()
-// {
-// 	int num = -2304;
-// 	char *ptr;
-// 	ptr = ft_itoa(num);
-// 	printf("ptr: %s\n", ptr);
-// }

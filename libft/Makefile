@@ -1,57 +1,31 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: mmensing <mmensing@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/05/04 00:22:41 by mmensing          #+#    #+#              #
-#    Updated: 2023/04/07 16:59:30 by mmensing         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME = libft.a
 
-NAME= libft.a
+SRC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c\
+		ft_isprint.c ft_itoa.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c\
+		ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_putstr_fd.c ft_split.c ft_strchr.c\
+		ft_strdup.c ft_striteri.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c\
+		ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c\
+		ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft_lstiter.c ft_lstlast.c\
+		ft_lstmap.c ft_lstnew.c ft_lstsize.c get_next_line.c get_next_line_utils.c get_next_line_bonus.c\
+		get_next_line_utils_bonus.c ft_printf.c ft_printf_utils.c\
 
-#define compiler and flags
-CC= cc 
-CFLAGS= -Wall -Wextra -Werror
-HEADER= libft.h
+OBJ = $(patsubst %.c, %.o, $(SRC))
 
-#Source Functions for the library
-MAND_SRC = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strlen.c \
-         ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c ft_strlcpy.c ft_strlcat.c \
-         ft_toupper.c ft_tolower.c ft_strchr.c ft_strrchr.c ft_strncmp.c \
-         ft_memchr.c ft_memcmp.c ft_strnstr.c ft_atoi.c \
-         ft_calloc.c ft_strdup.c \
-         ft_substr.c ft_strjoin.c ft_strtrim.c ft_strmapi.c \
-	    ft_itoa.c ft_striteri.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
-	    ft_split.c ft_putchar_fd.c \
-		 
-BONUS_SRC = ft_lstnew.c ft_lstsize.c ft_lstadd_front.c ft_lstadd_back.c ft_lstdelone.c \
-			ft_lstclear.c ft_lstiter.c ft_lstlast.c \
-		   #ft_lstmap.c 
-		   
-# The object files after compiling
-MAND_OBS = $(MAND_SRC:%.c=%.o)
+CC = gcc
 
-BONUS_OBS = $(BONUS_SRC:%.c=%.o)
-
-RM = rm -f
+CFLAGS = -Werror -Wextra -Wall
 
 all: $(NAME)
 
-$(NAME): $(MAND_OBS) $(HEADER)
-	ar rcs $(NAME) $(MAND_OBS)
+$(NAME) : $(OBJ)
+	ar -rcs $(NAME) $(OBJ)
 
 clean:
-	$(RM) $(MAND_OBS) $(BONUS_OBS)
+	rm -f $(OBJ)
 
 fclean: clean
-	${RM} $(NAME)
-	
-bonus: $(BONUS_OBS) $(HEADER)
-	ar rcs $(NAME) $(BONUS_OBS)
+	rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re

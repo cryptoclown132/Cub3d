@@ -3,48 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmensing <mmensing@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/13 00:03:01 by mmensing          #+#    #+#             */
-/*   Updated: 2023/03/01 10:48:40 by mmensing         ###   ########.fr       */
+/*   Created: 2022/05/05 17:25:55 by jkroger           #+#    #+#             */
+/*   Updated: 2022/06/08 14:15:03 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/**
- * @brief function allocates (with malloc) and returns a substring
- *        from the string s
- *        substring begins at start and ends with len
- * @param s string where a subtring gets excluded of
- * @param start start of created substring 
- * @param len end of created substring
- * @return char pointer to allocated mem with subtring
- */
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*newstr;
+	char	*ptr;
+	size_t	i;
 
-	if (s == NULL)
+	if (!s)
 		return (NULL);
-	if (start >= ft_strlen(s))
+	if (start >= ft_strlen(s) || len <= 0)
 		return (ft_strdup(""));
-	if ((unsigned int)ft_strlen(s) < len)
-		len = ft_strlen(s);
-	newstr = malloc(sizeof (char) * (len + 1));
-	if (!(newstr))
+	if (len > ft_strlen(s) - start)
+		len = ft_strlen(s) - start;
+	ptr = malloc((len + 1) * sizeof(char));
+	if (!ptr)
 		return (NULL);
-	newstr = ft_memcpy(newstr, (char *)(s + start), len);
-	newstr[len] = '\0';
-	return (newstr);
+	i = 0;
+	while (i < len)
+	{
+		ptr[i] = s[start];
+		i++;
+		start++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
 }
-
-// int main()
-// {
-//      char array[50] = "bro something wrong with you";
-//      unsigned int start = 3;
-//      size_t end = 10;
-//      char *ptr1;
-//      ptr1 = ft_substr(array, start, end);
-//      printf("subtring: %s\n", ptr1);
-// }

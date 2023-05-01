@@ -3,56 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmensing <mmensing@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 21:07:06 by mmensing          #+#    #+#             */
-/*   Updated: 2023/04/04 12:44:41 by mmensing         ###   ########.fr       */
+/*   Created: 2022/04/28 19:06:59 by jkroger           #+#    #+#             */
+/*   Updated: 2022/06/29 17:49:02 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/**
- * @brief function converts string argument to integer type(returns int)
- * stops if it reaches a no digit character, or a not '-' '+' character
- * spaces & tabs are okay only BEFORE argument
- * valid arguments: "423", "-273", "+765", "   -765"
- * @param str char string
- * @return int converted char string if given argument is valid, else returns 0
- */
-int	ft_atoi(const char *str)
+static int	ft_convert(const char *str, int i, int c)
 {
-	int		val;
-	int		minus;
-	int		i;
+	long	res;
 
-	val = 0;
-	minus = 1;
-	i = 0;
-	while ((str[i] == 32) || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-')
+	res = 0;
+	while (str[i])
 	{
-		minus = -1;
-		i++;
+		if ((str[i] - '0' <= 9 && str[i] - '0' >= 0))
+		{
+			res = res * 10 + str[i] - '0';
+			i++;
+		}
+		else
+			break ;
 	}
-	else if (str[i] == '+')
-		i++;
-	while ((str[i] != '\0') && (str[i] >= 48 && str[i] <= 57))
-	{
-		val = 10 * val + str[i] - 48;
-		i++;
-	}
-	return (val * minus);
+	return (c * res);
 }
 
-// int main()
-// {
-// 		char array[20] = "-587";
-// 		int ori;
-// 		ori = atoi(array);
-// 		printf("ori: %d\n", ori);
-// 		int mine;
-// 		mine = ft_atoi(array);
-// 		printf("mine: %d\n", mine);
-// }
+int	ft_atoi(const char *str)
+{
+	int	i;
+	int	c;
+
+	c = 1;
+	i = 0;
+	while (str[i] != '\0' && (str[i] == 32 || str[i] == '\t' || str[i] == '\n'
+			|| str[i] == '\r' || str[i] == '\v' || str[i] == '\f'))
+	i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			c = -1;
+		i++;
+	}
+	return (ft_convert(str, i, c));
+}

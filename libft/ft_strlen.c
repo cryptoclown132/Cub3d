@@ -3,37 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stena-he <stena-he@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/25 19:40:18 by mmensing          #+#    #+#             */
-/*   Updated: 2023/03/29 19:45:57 by stena-he         ###   ########.fr       */
+/*   Created: 2022/04/28 19:09:35 by jkroger           #+#    #+#             */
+/*   Updated: 2022/10/02 00:33:49 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/**
- * @brief returns lengh of str
- * 
- * @param str 
- * @return size_t lengh of str
- */
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen(const char *s)
 {
-	int	i;
+	size_t	i;
 
-	i = 0;
-	if (!str)
+	if (!s)
 		return (0);
-	while (str[i] != '\0')
+	i = 0;
+	while (s[i])
+	{
 		i++;
+	}
 	return (i);
 }
-
-// int main(void)
-// {
-//     char array[10] = "bananaboot";
-//     int test;
-//     test = ft_strlen(array);
-//     printf("muine: %d\n", test);
-// }

@@ -1,26 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/13 12:31:07 by jkroger           #+#    #+#             */
-/*   Updated: 2023/04/14 15:55:32 by jkroger          ###   ########.fr       */
+/*   Created: 2022/06/22 20:24:33 by jkroger           #+#    #+#             */
+/*   Updated: 2022/10/01 13:40:50 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "get_next_line_bonus.h"
 
-void	ft_error(char *err_msg)
+char	*edited_strjoin(char *s1, char *s2)
 {
-	printf("Error: %s\n", err_msg);
-	exit(1);
-}
+	char	*ptr;
+	size_t	i;
+	size_t	j;
 
-void	error_free(char *err_msg, t_cub *cub)
-{
-	printf("Error: %s\n", err_msg);
-	close_and_free(cub);
-	exit(1);
+	ptr = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (!ptr)
+		return (NULL);
+	i = 0;
+	if (s1)
+	{
+		while (s1[i])
+		{
+			ptr[i] = s1[i];
+			i++;
+		}
+	}
+	j = 0;
+	while (s2[j])
+	{
+		ptr[i++] = s2[j++];
+	}
+	ptr[i] = '\0';
+	free(s1);
+	return (ptr);
 }

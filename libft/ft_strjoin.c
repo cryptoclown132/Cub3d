@@ -3,58 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmensing <mmensing@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/13 01:27:29 by mmensing          #+#    #+#             */
-/*   Updated: 2022/06/06 23:15:08 by mmensing         ###   ########.fr       */
+/*   Created: 2022/05/05 18:02:37 by jkroger           #+#    #+#             */
+/*   Updated: 2022/06/06 16:05:38 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/**
- * @brief function connects to given strings and allocates
- * memory for them with malloc
- * 
- * @param s1 fist string
- * @param s2 second string
- * @return char pointer to allocated memory space
- */
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*ptr;
-	int		i;
-	int		k;
+	size_t	i;
+	size_t	j;
 
 	if (!s1 || !s2)
 		return (NULL);
-	ptr = (char *) malloc(ft_strlen((char *)s1) + ft_strlen((char *)s2) + 1);
+	ptr = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!ptr)
 		return (NULL);
-	k = 0;
 	i = 0;
-	while (s1[i] != '\0')
+	while (s1[i])
 	{
 		ptr[i] = s1[i];
 		i++;
 	}
-	while (s2[k] != '\0')
+	j = 0;
+	while (s2[j])
 	{
-		ptr[i] = s2[k];
+		ptr[i] = s2[j];
 		i++;
-		k++;
+		j++;
 	}
 	ptr[i] = '\0';
 	return (ptr);
 }
-
-// int main()
-// {
-// 	char array1[30] = "du";
-// 	char array2[30] = "hu";
-// 	char *bla;
-// 	printf("srtlen: %d\n", ft_strlen(array1) + ft_strlen(array2));
-
-// 	bla = ft_strjoin(array1, array2);
-// 	printf("ptr: %s\n", bla);
-// }

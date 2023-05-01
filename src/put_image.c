@@ -6,12 +6,11 @@
 /*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 11:49:39 by jkroger           #+#    #+#             */
-/*   Updated: 2023/05/01 17:23:59 by jkroger          ###   ########.fr       */
+/*   Updated: 2023/05/01 20:01:58 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../inc/cub3d.h"
-# include "../libft/libft.h"
+#include "../inc/cub3d.h"
 
 void	put_texture(t_img *img, t_hold *hold, int x, int y)
 {
@@ -89,6 +88,7 @@ t_img	*which_texture(t_hold *hold)
 void	put_image(t_hold *hold)
 {
 	int	x;
+
 	x = -1;
 	while (++x < WIDHT)
 	{
@@ -96,12 +96,4 @@ void	put_image(t_hold *hold)
 		put_image_height(which_texture(hold), hold, x);
 	}
 	mlx_put_image_to_window(hold->mlx, hold->mlx_win, hold->img->img, 0, 0);
-}
-
-
-void	colours_and_images(t_hold *hold)
-{
-	hold->floor_colour = get_colour(hold, hold->floor);
-	hold->ceiling_colour = get_colour(hold, hold->ceiling);
-	init_images(hold);
 }

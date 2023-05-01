@@ -3,38 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmensing <mmensing@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/25 18:54:20 by mmensing          #+#    #+#             */
-/*   Updated: 2022/06/06 17:42:15 by mmensing         ###   ########.fr       */
+/*   Created: 2022/04/28 19:07:59 by jkroger           #+#    #+#             */
+/*   Updated: 2022/05/18 11:45:31 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/**
- * @brief   function checks if parameter is a digit (0 - 9)
- * 
- * @param val parameter that gets checked
- * @return int  returns 1 if parameter is a digit
-                returns 0 if not
- */
-int	ft_isdigit(int val)
+int	ft_isdigit(int c)
 {
-	if (val >= 48 && val <= 57)
-	{
+	if (c >= '0' && c <= '9')
 		return (1);
-	}
-	return (0);
+	else
+		return (0);
 }
-
-/* int main()
-{
-    int bla = 50;
-    int test;
-    test = ft_isdigit(bla);
-    printf("%d\n", test);
-    test = ft_isdigit(bla);
-    printf("%d\n", test);
-}
- */

@@ -3,60 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmensing <mmensing@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/10 12:15:50 by mmensing          #+#    #+#             */
-/*   Updated: 2022/06/06 22:53:39 by mmensing         ###   ########.fr       */
+/*   Created: 2022/04/28 19:09:19 by jkroger           #+#    #+#             */
+/*   Updated: 2022/05/22 15:31:44 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"// 3/3 tester good
+#include "libft.h"
 
-/**
- * @brief 	function appends whole string src at the end of dst
-			take whole size of destination buffer not only the size
-			garantees null termination (as long size > 0 && dest has at 
-			least one free space)
-			function does not check if dts or src is NULL !
- * 
- * @param dst string where src gets appended to
- * @param src string that gets appended to the end of dst 
- * @param len how many characters of dst gets appended
- * @return size_t	returns size of src + dst (without NUL)
-					returns NULL if fails
- */
-size_t	ft_strlcat(char *dst, const char *src, size_t len)
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	char		*d;
-	const char	*s;
-	size_t		i;
-	size_t		d_len;
+	size_t	i;
+	size_t	j;
+	size_t	k;
 
-	d = dst;
-	s = (char *) src;
-	i = len;
-	d_len = 0;
-	while ((i-- != 0) && (*d != '\0'))
-		d++;
-	d_len = d - dst;
-	i = len - d_len;
-	if (i == 0)
-		return (d_len + ft_strlen(s));
-	while (*s != '\0')
+	j = ft_strlen(dst);
+	k = ft_strlen(src);
+	if (dstsize == 0 || dstsize <= j)
+		return (k + dstsize);
+	else
 	{
-		if (i != 1)
-			ft_strlcpy (d++, s, i--);
-		s++;
+		i = 0;
+		while (i < dstsize - j - 1 && src[i])
+		{
+			dst[i + j] = src[i];
+			i++;
+		}
+		dst[i + j] = '\0';
+		return (j + k);
 	}
-	*d = '\0';
-	return (d_len + (s - src));
 }
-
-// int main()
-// {
-//     char s1[]= "Moon";
-//     char s2[]= "Base";
-//     size_t size = 4;
-//     printf("%lu\n", ft_strlcat(s1,s2,size));
-//     printf("%s",s1);
-// }

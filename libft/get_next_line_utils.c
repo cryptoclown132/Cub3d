@@ -1,28 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/28 17:54:46 by jkroger           #+#    #+#             */
-/*   Updated: 2022/04/28 17:54:46 by jkroger          ###   ########.fr       */
+/*   Created: 2022/06/22 20:24:33 by jkroger           #+#    #+#             */
+/*   Updated: 2022/06/22 20:24:33 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "get_next_line.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+char	*edited_strjoin(char *s1, char *s2)
 {
-	unsigned char	*d;
-	size_t			i;
+	char	*ptr;
+	size_t	i;
+	size_t	j;
 
-	d = (unsigned char *)b;
+	ptr = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (!ptr)
+		return (NULL);
 	i = 0;
-	while (i < len)
+	if (s1)
 	{
-		d[i] = c;
-		i++;
+		while (s1[i])
+		{
+			ptr[i] = s1[i];
+			i++;
+		}
 	}
-	return (b = d);
+	j = 0;
+	while (s2[j])
+	{
+		ptr[i++] = s2[j++];
+	}
+	ptr[i] = '\0';
+	free(s1);
+	return (ptr);
 }

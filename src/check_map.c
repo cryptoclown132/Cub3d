@@ -1,43 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/01 19:16:48 by jkroger           #+#    #+#             */
+/*   Updated: 2023/05/01 19:57:21 by jkroger          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/cub3d.h"
-
-void update_data(t_hold *hold, int j, int i, char player)
-{
-	hold->map_pos[0] = j;
-	hold->map_pos[1] = i;
-	hold->pos[0] = j +0.5;
-	hold->look[0] = i +0.5;
-	hold->pos[1] = i +0.5;
-	hold->look[1] = j +0.5-LINE_LEN;
-
-	if (player == 'S')
-	{
-		hold->dirx = 0;
-		hold->diry = 1;
-		hold->plane[0] = -0.9;
-		hold->plane[1] = 0;
-	}
-	else if (player == 'N')
-	{
-		hold->dirx = 0;
-		hold->diry = -1;
-		hold->plane[0] = 0.9;
-		hold->plane[1] = 0;
-	}
-	else if (player == 'E')
-	{
-		hold->dirx = 1;
-		hold->diry = 0;
-		hold->plane[0] = 0;
-		hold->plane[1] = 0.9;
-	}
-	else if (player == 'W')
-	{
-		hold->dirx = -1;
-		hold->diry = 0;
-		hold->plane[0] = 0;
-		hold->plane[1] = -0.9;
-	}
-}
 
 void	valid_elem(t_hold *hold)
 {
@@ -45,27 +18,25 @@ void	valid_elem(t_hold *hold)
 	int	j;
 	int	player;
 
-	i = 0;
+	i = -1;
 	player = 0;
 	if (!hold->map)
 		error_free("No map existing!", hold);
-	while (hold->map[i])
+	while (hold->map[++i])
 	{
-		j = 0;
-		while (hold->map[i][j])
+		j = -1;
+		while (hold->map[i][++j])
 		{
 			if (hold->map[i][j] == 'S' || hold->map[i][j] == 'N'
 				|| hold->map[i][j] == 'W' || hold->map[i][j] == 'E')
 			{
-				update_data(hold, j, i, hold->map[i][j]);
+				player_dir(hold, j, i, hold->map[i][j]);
 				player++;
 			}
 			else if (hold->map[i][j] != '1' && hold->map[i][j] != '0'
 				&& hold->map[i][j] != ' ' && hold->map[i][j] != '\n')
 				error_free("Wrong element in the map!", hold);
-			j++;
 		}
-		i++;
 	}
 	check_player(player, hold);
 }

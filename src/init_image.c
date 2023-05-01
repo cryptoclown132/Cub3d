@@ -80,3 +80,10 @@ void	init_images(t_hold *hold)
 			&hold->img_north->line_length, &hold->img_north->endian);
 	init_images_2(hold);
 }
+
+void	colours_and_images(t_hold *hold)
+{
+	hold->floor_colour = get_colour(hold, hold->floor);
+	hold->ceiling_colour = get_colour(hold, hold->ceiling);
+	init_images(hold);
+}

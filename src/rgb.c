@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../inc/cub3d.h"
-# include "../libft/libft.h"
+#include "../inc/cub3d.h"
 
 int	convert_colour(int t, int r, int g, int b)
 {

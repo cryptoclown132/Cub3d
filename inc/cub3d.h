@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hold3d.h                                            :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/01 17:11:27 by jkroger           #+#    #+#             */
-/*   Updated: 2023/05/01 17:18:00 by jkroger          ###   ########.fr       */
+/*   Created: 2023/05/01 20:27:39 by jkroger           #+#    #+#             */
+/*   Updated: 2023/05/01 20:38:58 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
-
-
 // ----------------------------------------------------------------------------
 //!		INCLUDES:
-#include <stdlib.h>
-#include <errno.h>		// errno
-#include <unistd.h>
-#include <stdio.h>		// debugging
-#include <math.h>		// cos and sin
+# include <stdlib.h>
+# include <errno.h>		// errno
+# include <unistd.h>
+# include <stdio.h>		// debugging
+# include <math.h>		// cos and sin
 # include <stdbool.h>	// bool
 # include <fcntl.h>	    // open func
 # include <limits.h>	// for macros
+# include <string.h>
 # include "../MLX/mlx.h"
 # include "../libft/libft.h"
-
 
 // ----------------------------------------------------------------------------
 //!		MACROS:
@@ -44,15 +42,7 @@
 # define HEIGHT 700
 # define ROTATION_ANGLE 0.2
 # define SPEED 0.25
-
-// get_next_line
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
-# endif
-
-
 # define MLX_ERROR -1
-
 # define LINE_LEN 4
 // keycodes:
 # define LEFT 123
@@ -68,7 +58,7 @@
 // ----------------------------------------------------------------------------
 //!		STRUCTS:
 
-typedef struct	s_img
+typedef struct s_img
 {
 	void	*img;
 	char	*addr;
@@ -109,80 +99,72 @@ typedef struct s_hold
 	int32_t	map_pos[2];
 	int32_t	step[2];
 	int32_t	side;
-	int32_t		floor_colour;
-	int32_t		ceiling_colour;
-	int32_t		tex_x;
-	int32_t		tex_y;
-	int32_t		tex_start;
-	int32_t		tex_end;
-	int32_t		line_height;
-	int32_t		fd;
-	int32_t		map_rows;
-	int32_t		map_columns;
+	int32_t	floor_colour;
+	int32_t	ceiling_colour;
+	int32_t	tex_x;
+	int32_t	tex_y;
+	int32_t	tex_start;
+	int32_t	tex_end;
+	int32_t	line_height;
+	int32_t	fd;
+	int32_t	map_rows;
+	int32_t	map_columns;
 }						t_hold;
 
 // ----------------------------------------------------------------------------
 // !		FUNCTIONS:
 
-
-// !	RAYCAST:
-void dda(t_hold *hold);
-
-
-// !	GETNEXTLINE:
-void	buff_after_line(char *buff);
-char	*create_last(char *buff, char *line);
-char	*get_next_line(int fd);
-
-
-// !	KEYEVENTS:
-int32_t key_hook(int keycode, t_hold *hold);
-
-
-// !	ERROR:
-void	ft_error(char *err_msg);
-void	error_free(char *err_msg, t_hold *hold);
-
-
-// !	holdUTILS:
-int	skip_space_tab(int i, char *line);
-void	check_file(char *file);
-
-
-// !	CHEKMAP:
-//	00_
-void	valid_elem(t_hold *hold);
-void	map_closed(t_hold *hold);
-void	resize_line(t_hold *hold, int i);
-void	resize_map(t_hold *hold);
-void	check_map(t_hold *hold);
-//	01_
+//	!	check_map_2.c:
 void	map_closed_2(t_hold *hold, int i, int j);
 void	player_in_map(t_hold *hold, int i, int j);
 int		empty_rows_2(t_hold *hold, int i);
 void	empty_rows(t_hold *hold);
 void	check_player(int player, t_hold *hold);
 
+// !	check_map.c:
+void	valid_elem(t_hold *hold);
+void	map_closed(t_hold *hold);
+void	resize_line(t_hold *hold, int i);
+void	resize_map(t_hold *hold);
+void	check_map(t_hold *hold);
 
-// !	PARSE:
-// 00_
+// !	cub_utils.c:
+int		skip_space_tab(int i, char *line);
+void	check_file(char *file);
+void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
+int		close_and_free(t_hold *hold);
+
+// !	error.c:
+void	ft_error(char *err_msg);
+void	error_free(char *err_msg, t_hold *hold);
+
+// !	init_image.c
+void	colours_and_images(t_hold *hold);
+void	init_images(t_hold *hold);
+
+// !	keyevents.c:
+int32_t	key_hook(int keycode, t_hold *hold);
+
+// !	parse.c:
 char	*get_path(char *line, int i);
-int	check_line(t_hold *hold, char *line);
+int		check_line(t_hold *hold, char *line);
 void	parse(t_hold *hold);
-// 01_
+
+// !	parse_2.c:
 void	count_rows(t_hold *hold);
 void	init_map_2(t_hold *hold, char *line);
 void	init_map(t_hold *hold);
 
+// !	player_dir.c:
+void	player_dir(t_hold *hold, int j, int i, char player);
 
-//my stuff
+// !	put_image.c:
 void	put_image(t_hold *hold);
-void	init_images(t_hold *hold);
+
+// !	raycast.c:
+void	raycast(t_hold *hold, int x);
+
+// !	rgb.c:
 int		get_colour(t_hold *hold, char *rgb);
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
-void	colours_and_images(t_hold *hold);
 
-int	close_and_free(t_hold *hold);
-
-void raycast(t_hold *hold, int x);
 #endif

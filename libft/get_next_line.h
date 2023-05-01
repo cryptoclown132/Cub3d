@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/28 17:54:46 by jkroger           #+#    #+#             */
-/*   Updated: 2022/04/28 17:54:46 by jkroger          ###   ########.fr       */
+/*   Created: 2022/06/22 20:24:41 by jkroger           #+#    #+#             */
+/*   Updated: 2022/06/22 20:24:41 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-void	*ft_memset(void *b, int c, size_t len)
-{
-	unsigned char	*d;
-	size_t			i;
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
 
-	d = (unsigned char *)b;
-	i = 0;
-	while (i < len)
-	{
-		d[i] = c;
-		i++;
-	}
-	return (b = d);
-}
+# include "libft.h" 
+
+char	*get_next_line(int fd);
+char	*edited_strjoin(char *s1, char *s2);
+
+#endif

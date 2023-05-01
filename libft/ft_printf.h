@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   printf.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/28 17:54:46 by jkroger           #+#    #+#             */
-/*   Updated: 2022/04/28 17:54:46 by jkroger          ###   ########.fr       */
+/*   Created: 2022/06/12 15:37:37 by jkroger           #+#    #+#             */
+/*   Updated: 2022/06/12 15:37:37 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
+# include <stdarg.h>
+# include "libft.h"
 
-void	*ft_memset(void *b, int c, size_t len)
-{
-	unsigned char	*d;
-	size_t			i;
+int	ft_string(char *s);
+int	ft_decimal(int d);
+int	ft_unsigned_decimal(unsigned int u);
+int	ft_hex(unsigned	int x, char format);
+int	ft_pointer(unsigned long int p);
+int	ft_printf(const char *format, ...);
 
-	d = (unsigned char *)b;
-	i = 0;
-	while (i < len)
-	{
-		d[i] = c;
-		i++;
-	}
-	return (b = d);
-}
+#endif

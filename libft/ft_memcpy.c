@@ -3,50 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmensing <mmensing@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/26 14:24:05 by mmensing          #+#    #+#             */
-/*   Updated: 2022/05/30 23:02:52 by mmensing         ###   ########.fr       */
+/*   Created: 2022/04/28 15:46:25 by jkroger           #+#    #+#             */
+/*   Updated: 2022/06/07 17:03:50 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/**
- * @brief	function copies src into dest 
-			no NULL at the end
-			function doesn’t check for overflow or \0 
- * @param dest pointer where stuff gets copied to
- * @param src stuff that gets copied into dest
- * @param n up to how many characters gets copy pasted
- * @return void* dest
- */
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	char	*sr;
-	char	*des;
-	size_t	i;
+	char		*c;
+	const char	*d;
+	size_t		i;
 
-	sr = (char *) src;
-	des = (char *) dest;
-	i = -1;
-	if ((src != NULL) || (dest != NULL))
+	c = (char *)dst;
+	d = (const char *)src;
+	if (n == 0 || (!c && !d))
+		return (dst);
+	i = 0;
+	while (i < n)
 	{
-		while (++i < n)
-		{
-			des[i] = sr[i];
-		}
+		c[i] = d[i];
+		i++;
 	}
-	return (des);
+	return (dst);
 }
-
-// int main()
-// {
-//     char array1[20] = "du bist behindert";
-//     char array2[10];
-//     unsigned int size = 10;
-//     ft_memcpy(array2, array1, size);
-//     printf("mine dest: %s\n", array2);
-//     memcpy(array2, array1, size);
-//     printf("ori dest: %s\n", array2);
-// }
