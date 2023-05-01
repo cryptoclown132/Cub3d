@@ -8,20 +8,9 @@ MLX		= -Lmlx -lmlx -framework OpenGL -framework AppKit
 LIB_F = libft
 LIB = libft/libft.a
 
-# SRC		=	sauce/main.c \
-# 			sauce/delete_later.c \
-# 			sauce/error.c \
-# 			sauce/cub_utils.c \
-# 			sauce/00_check_map.c \
-# 			sauce/01_check_map.c \
-# 			sauce/00_parse.c \
-# 			sauce/01_parse.c \
-# 			sauce/get_next_line.c \
-# 			sauce/raycast.c \
-# 			sauce/keyevents.c
-SRC = ${shell echo sauce/*.c}
+SRC = ${shell echo src/*.c}
 
-SRC_PATH = sauce/
+SRC_PATH = src/
 OBJ_PATH = obj/
 INC_PATH = inc/
 
@@ -43,7 +32,7 @@ fclean: clean
 clean:
 	$(RM) $(OBJ_PATH)
 	cd libft && $(MAKE) clean
-	$(RM) sauce/*.o MLX/*.o
+	$(RM) src/*.o MLX/*.o
 	@make clean -C $(LIB_F)
 
 	

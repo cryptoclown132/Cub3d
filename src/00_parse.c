@@ -5,7 +5,7 @@ char	*get_path(char *line, int i)
 	char	*path;
 	int		j;
 
-	i = skip_space_tab(++i, line);//can make problems for C and F
+	i = skip_space_tab(++i, line);
 	j = i;
 	while (line[j] && line[j] != ' ' && line[j] != '\t' && line[j] != '\n')
 		j++;
@@ -13,51 +13,51 @@ char	*get_path(char *line, int i)
 	return (path);
 }
 
-int	check_line(t_cub *cub, char *line)
+int	check_line(t_hold *hold, char *line)
 {
 	int	i;
 
 	i = skip_space_tab(0, line);
 	if (line[i] == 'N' && line[i + 1] == 'O')
-		cub->path_north = get_path(line, ++i);
+		hold->path_north = get_path(line, ++i);
 	else if (line[i] == 'S' && line[i + 1] == 'O')
-		cub->path_south = get_path(line, ++i);
+		hold->path_south = get_path(line, ++i);
 	else if (line[i] == 'W' && line[i + 1] == 'E')
-		cub->path_west = get_path(line, ++i);
+		hold->path_west = get_path(line, ++i);
 	else if (line[i] == 'E' && line[i + 1] == 'A')
-		cub->path_east = get_path(line, ++i);
+		hold->path_east = get_path(line, ++i);
 	else if (line[i] == 'F')
-		cub->floor = get_path(line, i);
+		hold->floor = get_path(line, i);
 	else if (line[i] == 'C')
-		cub->ceiling = get_path(line, i);
+		hold->ceiling = get_path(line, i);
 	else if (line[i] == '1' || line[i] == '0')
 		return (1);
 	return (0);
 }
 
-void	parse(t_hold *hold, t_cub *cub)
+void	parse(t_hold *hold)
 {
 	char	*line;
 
-	cub->fd = open(cub->file_name, O_RDONLY);
-	if (cub->fd < 0)
-		error_free(strerror(errno), cub);
-	line = get_next_line(cub->fd);
+	hold->fd = open(hold->file_name, O_RDONLY);
+	if (hold->fd < 0)
+		error_free(strerror(errno), hold);
+	line = get_next_line(hold->fd);
 	while (line)
 	{
-		if (check_line(cub, line))
+		if (check_line(hold, line))
 		{
 			free(line);
-			init_map(cub);
+			init_map(hold);
 			break ;
 		}
 		free(line);
-		line = get_next_line(cub->fd);
+		line = get_next_line(hold->fd);
 	}
-	if (!cub->map)
+	if (!hold->map)
 	{
 		printf("map access kagge\n");
-		close(cub->fd);
+		close(hold->fd);
 	}
-	check_map(hold, cub);
+	check_map(hold);
 }

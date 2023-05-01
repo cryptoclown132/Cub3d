@@ -2,13 +2,9 @@
 
 void raycast(t_hold *hold, int x)
 {
-
-	//has to be implemented
-	double cameraX = 2 * x / (double)WIDHT - 1; //x-coordinate in camera space
+	double cameraX = 2 * x / (double)WIDHT - 1;
 	hold->look[0] = hold->dirx + hold->plane[0] * cameraX;
 	hold->look[1] = hold->diry + hold->plane[1] * cameraX;
-
-
 	if(hold->look[0] == 0)
 	{
 		hold->delta_dist[0] = 1e30;
@@ -28,7 +24,7 @@ void raycast(t_hold *hold, int x)
 
 	hold->map_pos[0] = (int)hold->pos[0]; 
 	hold->map_pos[1] = (int)hold->pos[1];
-	// side dist for x
+	
 	if (hold->look[0] < 0)
 	{
 		hold->step[0] = -1;
@@ -40,7 +36,6 @@ void raycast(t_hold *hold, int x)
 		hold->side_dist[0] = (hold->map_pos[0] + 1.0 - hold->pos[0]) * hold->delta_dist[0];
 	}
 
-	// same for y
 	if (hold->look[1] < 0)
 	{
 		hold->step[1] = -1;
@@ -72,7 +67,7 @@ void dda(t_hold *hold)
 			hold->map_pos[1] += hold->step[1];
 			hold->side = 1;
 		}
-		if (hold->cub->map[hold->map_pos[1]][hold->map_pos[0]] == '1')
+		if (hold->map[hold->map_pos[1]][hold->map_pos[0]] == '1')
 		{
 			break;
 		}
@@ -85,13 +80,12 @@ void dda(t_hold *hold)
 	else
 		hold->wall_dist = hold->side_dist[1] - hold->delta_dist[1];
 	
-	hold->cub->line_height = (int)(HEIGHT / hold->wall_dist);
-	hold->cub->tex_start = -hold->cub->line_height / 2 + HEIGHT / 2;
-	// printf("walldist = %f\n", hold->wall_dist);
-	// printf("side = %i\n", hold->side);
-	if (hold->cub->tex_start < 0)
-		hold->cub->tex_start = 0;
-	hold->cub->tex_end = hold->cub->line_height / 2 + HEIGHT / 2;
-	if (hold->cub->tex_end >= HEIGHT)
-		hold->cub->tex_end = HEIGHT - 1;
+	hold->line_height = (int)(HEIGHT / hold->wall_dist);
+	hold->tex_start = -hold->line_height / 2 + HEIGHT / 2;
+
+	if (hold->tex_start < 0)
+		hold->tex_start = 0;
+	hold->tex_end = hold->line_height / 2 + HEIGHT / 2;
+	if (hold->tex_end >= HEIGHT)
+		hold->tex_end = HEIGHT - 1;
 }

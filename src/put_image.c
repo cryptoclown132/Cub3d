@@ -6,40 +6,35 @@
 /*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 11:49:39 by jkroger           #+#    #+#             */
-/*   Updated: 2023/04/29 17:45:45 by jkroger          ###   ########.fr       */
+/*   Updated: 2023/05/01 17:23:59 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../inc/cub3d.h"
 # include "../libft/libft.h"
 
-void	put_texture(t_img *img, t_cub *cub, int x, int y)
+void	put_texture(t_img *img, t_hold *hold, int x, int y)
 {
 	int	color;
 
-	color = *(int *)(img->addr + ((int)(cub->tex_y) % \
-		img->height * img->line_length + cub->tex_x % img->width * \
+	color = *(int *)(img->addr + ((int)(hold->tex_y) % \
+		img->height * img->line_length + hold->tex_x % img->width * \
 		(img->bits_per_pixel / 8)));
-	my_mlx_pixel_put(cub->img, x, y, color);
-	// t_img *t = img;
-	// my_mlx_pixel_put(cub->img, x, y, 0xFF000000);
-	// if (t)
-	// 	return ;
-	//0x00FF0000
+	my_mlx_pixel_put(hold->img, x, y, color);
 }
 
 void	texture_coordinates(t_img *img, t_hold *hold)
 {
 	if (hold->side == 0)
-		hold->cub->wallx = hold->pos[1] + hold->wall_dist * hold->look[1];
+		hold->wallx = hold->pos[1] + hold->wall_dist * hold->look[1];
 	else
-		hold->cub->wallx = hold->pos[0] + hold->wall_dist * hold->look[0];
-	hold->cub->wallx -= floor((hold->cub->wallx));
-	hold->cub->tex_x = (int)(hold->cub->wallx * (double)img->width);
+		hold->wallx = hold->pos[0] + hold->wall_dist * hold->look[0];
+	hold->wallx -= floor((hold->wallx));
+	hold->tex_x = (int)(hold->wallx * (double)img->width);
 	if (hold->side == 0 && hold->look[0] > 0)
-		hold->cub->tex_x = img->width - hold->cub->tex_x - 1;
+		hold->tex_x = img->width - hold->tex_x - 1;
 	if (hold->side == 1 && hold->look[1] < 0)
-		hold->cub->tex_x = img->width - hold->cub->tex_x - 1;
+		hold->tex_x = img->width - hold->tex_x - 1;
 }
 
 void	put_image_height(t_img *img, t_hold *hold, int x)
@@ -49,24 +44,23 @@ void	put_image_height(t_img *img, t_hold *hold, int x)
 	double	tex_pos;
 
 	y = -1;
-	step = 1.0 * img->height / hold->cub->line_height;
-	tex_pos = (hold->cub->tex_start - HEIGHT / 2 + hold->cub->line_height / 2) * step;
+	step = 1.0 * img->height / hold->line_height;
+	tex_pos = (hold->tex_start - HEIGHT / 2 + hold->line_height / 2) * step;
 	texture_coordinates(img, hold);
-	while (++y < HEIGHT && y <= hold->cub->tex_start)
-		my_mlx_pixel_put(hold->cub->img, x, y, hold->cub->floor_colour);
-	while (y < HEIGHT && y <= hold->cub->tex_end)
+	while (++y < HEIGHT && y <= hold->tex_start)
+		my_mlx_pixel_put(hold->img, x, y, hold->floor_colour);
+	while (y < HEIGHT && y <= hold->tex_end)
 	{
-		hold->cub->tex_y = (int)tex_pos & (img->height - 1);
+		hold->tex_y = (int)tex_pos & (img->height - 1);
 		tex_pos += step;
-		put_texture(img, hold->cub, x, y);
+		put_texture(img, hold, x, y);
 		y++;
 	}
 	while (y < HEIGHT)
 	{
-		my_mlx_pixel_put(hold->cub->img, x, y, hold->cub->ceiling_colour);
+		my_mlx_pixel_put(hold->img, x, y, hold->ceiling_colour);
 		y++;
 	}
-	//printf("end = %i\n", hold->cub->tex_end);
 }
 
 t_img	*which_texture(t_hold *hold)
@@ -74,21 +68,21 @@ t_img	*which_texture(t_hold *hold)
 	if (((hold->look[0] <= 0 && hold->look[1] <= 0)
 			|| (hold->look[0] >= 0 && hold->look[1] <= 0))
 		&& hold->side == 1)
-		return (hold->cub->img_north);
+		return (hold->img_north);
 	else if (((hold->look[0] >= 0 && hold->look[1] >= 0)
 			|| (hold->look[0] <= 0 && hold->look[1] >= 0))
 		&& hold->side == 1)
-		return (hold->cub->img_south);
+		return (hold->img_south);
 	else if (((hold->look[0] <= 0 && hold->look[1] <= 0)
 			|| (hold->look[0] <= 0 && hold->look[1] >= 0))
 		&& hold->side == 0)
-		return (hold->cub->img_west);
+		return (hold->img_west);
 	else if (((hold->look[0] >= 0 && hold->look[1] >= 0)
 			|| (hold->look[0] >= 0 && hold->look[1] <= 0))
 		&& hold->side == 0)
-		return (hold->cub->img_east);
+		return (hold->img_east);
 	else
-		error_free("No direction to indicate the texture!", hold->cub);
+		error_free("No direction to indicate the texture!", hold);
 	return (NULL);
 }
 
@@ -101,17 +95,13 @@ void	put_image(t_hold *hold)
 		raycast(hold, x);
 		put_image_height(which_texture(hold), hold, x);
 	}
-	mlx_put_image_to_window(hold->mlx, hold->mlx_win, hold->cub->img->img, 0, 0);
+	mlx_put_image_to_window(hold->mlx, hold->mlx_win, hold->img->img, 0, 0);
 }
 
 
 void	colours_and_images(t_hold *hold)
 {
-	hold->cub->floor_colour = get_colour(hold->cub, hold->cub->floor);
-	hold->cub->ceiling_colour = get_colour(hold->cub, hold->cub->ceiling);
+	hold->floor_colour = get_colour(hold, hold->floor);
+	hold->ceiling_colour = get_colour(hold, hold->ceiling);
 	init_images(hold);
 }
-
-//side if to know if x or y side was hit
-//side 1 is y side
-//side 0 x side
