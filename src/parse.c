@@ -6,7 +6,7 @@
 /*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 19:47:35 by jkroger           #+#    #+#             */
-/*   Updated: 2023/05/01 19:47:43 by jkroger          ###   ########.fr       */
+/*   Updated: 2023/05/02 13:23:21 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,6 @@ void	parse(t_hold *hold)
 		line = get_next_line(hold->fd);
 	}
 	if (!hold->map)
-	{
-		printf("map access kagge\n");
 		close(hold->fd);
-	}
 	check_map(hold);
 }
