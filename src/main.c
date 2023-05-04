@@ -6,7 +6,7 @@
 /*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 19:40:16 by jkroger           #+#    #+#             */
-/*   Updated: 2023/05/01 20:51:56 by jkroger          ###   ########.fr       */
+/*   Updated: 2023/05/02 19:13:56 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	init_hold(t_hold *hold, char **argv)
 	hold->img_east = NULL;
 	hold->img_south = NULL;
 	hold->img_west = NULL;
-	hold->mlx = NULL;
 	hold->mlx_win = NULL;
+	hold->mlx = NULL;
 	hold->map = NULL;
 	hold->ceiling = NULL;
 	hold->floor = NULL;
